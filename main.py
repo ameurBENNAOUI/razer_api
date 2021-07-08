@@ -281,4 +281,4 @@ async def OTPMessage_EP(email:str,OTP:str):
 # if __name__ == '__main__':
 #     uvicorn.run("main:app", port=8080, host='0.0.0.0', reload=True)
 
-# status=TOPUP_product(email,password,catalog_url,User_ID,amount)  
+status=TOPUP_product(email,password,catalog_url,User_ID,amount)  
