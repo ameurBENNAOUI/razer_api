@@ -84,22 +84,24 @@ def get_session(email,password,profile) :
     try:
     
         driver=get_driver(profile)
+        driver=login(email,password,driver)
+
     except Exception as e:
+        
         print(e)
     
-    try:
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="/account/photo/edit"]')))
-        print ("Already  login  .....")
+    # try:
+    #     WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="/account/photo/edit"]')))
+    #     print ("Already  login  .....")
 
-    except:
-        print('login in the RAZER....')
+    # except:
+    #     print('login in the RAZER....')
 
-        try:
-            WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '//*[@id="login"]/div[2]/button'))).click()
-        except:
-            pass    
-    
-    driver=login(email,password,driver)
+    #     try:
+    #         WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '//*[@id="login"]/div[2]/button'))).click()
+    #     except:
+    #         pass    
+    # driver=login(email,password,driver)
     
     
 
