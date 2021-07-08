@@ -1,0 +1,5 @@
+pandas
+fastapi[all]
+fastapi
+selenium
+uvicorn
