@@ -157,7 +157,7 @@ def RELOAD_account(email,password,pincode):
 def TOPUP_product(email,password,catalog_url,User_ID,amount):
     try:
             if os.name!='nt' : 
-                display = Display(visible=0, size=(800, 600))
+                display = Display(visible=0, size=(2000, 2000))
                 display.start()
                 
             profile=os.path.join(os.getcwd(), "data", email) 
