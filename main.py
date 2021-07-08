@@ -25,6 +25,7 @@ import shutil
 import pandas as pd
 import subprocess
 from fastapi.logger import logger as fastapi_logger
+import psutil
 
 def get_driver(profile):
     try:
@@ -34,7 +35,7 @@ def get_driver(profile):
     else:
         print ("Successfully created the directory %s" % profile)
         
-        destination = shutil.copytree('./data/orgin', profile, copy_function = shutil.copy)
+        destination = shutil.copytree(os.path.join(os.getcwd(), 'data/orgin'), profile, copy_function = shutil.copy)
     try:
         for proc in psutil.process_iter():
             # check whether the process name matches
@@ -223,6 +224,7 @@ password='Mohamed@2020'
 catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
 User_ID='2039664991'
 amount='100 + 10 Diamonds - USD 1.00'
+
 @app.post("/TOPUP_product/",tags=["TOPUP product"])
 async def TOPUP_product(email:str,password:str,catalog_url: str ,User_ID:str,amount: str):
 
