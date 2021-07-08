@@ -26,7 +26,8 @@ import pandas as pd
 import subprocess
 from fastapi.logger import logger as fastapi_logger
 import psutil
-
+display = Display(visible=0, size=(800, 600))
+display.start()
 def get_driver(profile):
     
     try:
@@ -74,9 +75,9 @@ def login(email,password,driver):
 def get_session(email,password,profile) :   
     print("create session for user:%s" % email)
     
-    if os.name!='nt' : 
-        display = Display(visible=0, size=(800, 600))
-        display.start()
+    # if os.name!='nt' : 
+    #     display = Display(visible=0, size=(800, 600))
+    #     display.start()
     
     driver=get_driver(profile)
     
@@ -207,8 +208,8 @@ def TOPUP_product(email,password,catalog_url,User_ID,amount):
         driver.quit()
     except:
         pass
-    if os.name!='nt' :                           
-        display.stop()
+    # if os.name!='nt' :                           
+    #     display.stop()
     return status
     
 app = FastAPI(title='RAZER API')
