@@ -75,9 +75,11 @@ def login(email,password,driver):
 def get_session(email,password,profile) :   
     print("create session for user:%s" % email)
     
-
+    try:
     
-    driver=get_driver(profile)
+        driver=get_driver(profile)
+    except Exception as e:
+        print(e)
     
     try:
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="/account/photo/edit"]')))
