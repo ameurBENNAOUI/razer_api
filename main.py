@@ -28,14 +28,19 @@ from fastapi.logger import logger as fastapi_logger
 import psutil
 
 def get_driver(profile):
+    
     try:
-        os.makedirs(profile)
+        shutil.rmtree(profile)
+        # os.makedirs(profile)
+        # os.rmdir(profile)
     except OSError:
-       print ("Already  created the directory %s" % profile)
-    else:
-        print ("Successfully created the directory %s" % profile)
+        pass
+    #    print ("Already  created the directory %s" % profile)
+    # else:
+    #     print ("Successfully created the directory %s" % profile)
         
-        destination = shutil.copytree(os.path.join(os.getcwd(), 'data/orgin'), profile, copy_function = shutil.copy)
+    destination = shutil.copytree(os.path.join(os.getcwd(), 'data\orgin'), profile, copy_function = shutil.copy)
+
     try:
         for proc in psutil.process_iter():
             # check whether the process name matches
@@ -142,59 +147,62 @@ def RELOAD_account(email,password,pincode):
  
     
 def TOPUP_product(email,password,catalog_url,User_ID,amount):
-    profile=os.path.join(os.getcwd(), "data", email) 
-    start_time = time.time()
-    driver=get_session(email,password,profile) 
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="/account/photo/edit"]')))
-    
-    driver=select_product_topup(email,password,catalog_url,User_ID,amount,driver)  
-    driver.execute_script("window.scrollTo(0, 300)")
-    
-    element=WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button.btnConfirm')))   
-    driver.execute_script("arguments[0].click();", element)
     try:
-        element=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.status-success")))          
-    except:
-        
-        try:
-            iframe = driver.find_element_by_xpath('//iframe[contains(@id, "razerOTP")]')
-            driver.switch_to_frame(iframe)
-            print('enter OTP Message')
-            k=0
-            while True:
-                time.sleep(1)
-                k=k+1
-                if k >40:
-                    break
-                data_file = pd.read_csv("data.csv") 
-                data_cc=data_file[data_file["email"]== email].iloc[-1, :]
-                if int(time.time())-int(data_cc["time"])<60:
-                    print(data_cc["OTP"])
-                    driver.find_element_by_xpath('//input[contains(@type, "number")]').send_keys(OTP)
-                    driver.switch_to.default_content()
-
-                    
-                    
-        except:
-                try:
-                    element=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.status-success")))          
-                except:
-                    print('Error Message')
-
-                    pass
-    driver.switch_to.default_content()
+            profile=os.path.join(os.getcwd(), "data", email) 
+            start_time = time.time()
+            driver=get_session(email,password,profile) 
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="/account/photo/edit"]')))
+            
+            driver=select_product_topup(email,password,catalog_url,User_ID,amount,driver)  
+            driver.execute_script("window.scrollTo(0, 300)")
+            
+            element=WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button.btnConfirm')))   
+            driver.execute_script("arguments[0].click();", element)
+            try:
+                element=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.status-success")))          
+            except:
                 
-    try:
-        element=WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.status-success"))) 
-        status='Successful'         
-    except:
-        status='Error'         
-
-        print('Error Message')
-     
+                try:
+                    iframe = driver.find_element_by_xpath('//iframe[contains(@id, "razerOTP")]')
+                    driver.switch_to_frame(iframe)
+                    print('enter OTP Message')
+                    k=0
+                    while True:
+                        time.sleep(1)
+                        k=k+1
+                        if k >40:
+                            break
+                        data_file = pd.read_csv("data.csv") 
+                        data_cc=data_file[data_file["email"]== email].iloc[-1, :]
+                        if int(time.time())-int(data_cc["time"])<60:
+                            print(data_cc["OTP"])
+                            driver.find_element_by_xpath('//input[contains(@type, "number")]').send_keys(OTP)
+                            driver.switch_to.default_content()
         
+                            
+                            
+                except:
+                        try:
+                            element=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.status-success")))          
+                        except:
+                            print('Error Message')
         
-    print("--- %s seconds ---" % (time.time() - start_time))
+                            pass
+            driver.switch_to.default_content()
+                        
+            try:
+                element=WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "span.status-success"))) 
+                status='Successful'         
+            except:
+                status='Error'         
+        
+                print('Error Message')
+             
+                
+                
+            print("--- %s seconds ---" % (time.time() - start_time))
+    except Exception as e:
+        status=e
     try:
         driver.quit()
     except:
@@ -219,28 +227,32 @@ app.add_middleware(
    
 
 
-email='bennaoui.ameur@gmail.com'
-password='Mohamed@2020'
-catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
-User_ID='2039664991'
-amount='100 + 10 Diamonds - USD 1.00'
+# email='bennaoui.ameur@gmail.com'
+# password='Mohamed@2020'
+# catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
+# User_ID='2039664991'
+# amount='100 + 10 Diamonds - USD 1.00'
 
 @app.post("/TOPUP_product/",tags=["TOPUP product"])
-async def TOPUP_product(email:str,password:str,catalog_url: str ,User_ID:str,amount: str):
-
-
-    status=TOPUP_product(email,password,catalog_url,User_ID,amount)    
-
+async def TOPUP_product_EP(email:str,password:str,catalog_url: str ,User_ID:str,amount: str):
+    try:
+    
+        status=TOPUP_product(email,password,catalog_url,User_ID,amount)  
+        print('======================================================')
+        
+        print(status)
+    except Exception as e:
+        status=e
     return JSONResponse(content={"status":status })
 
 @app.post("/RELOAD_account/",tags=["RELOAD account"])
-async def RELOAD_account(email:str,password:str,pincode: str):
+async def RELOAD_account_EP(email:str,password:str,pincode: str):
     status=RELOAD_account(email,password,pincode)
     
     return JSONResponse(content={"status":status }) 
   
 @app.post("/OTPMessage/",tags=["OTP Message"])
-async def OTPMessage(email:str,OTP:str):
+async def OTPMessage_EP(email:str,OTP:str):
     data={
     "time":int(time.time()),
     "email": email,
