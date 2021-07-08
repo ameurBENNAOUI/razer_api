@@ -25,9 +25,7 @@ import shutil
 import pandas as pd
 import subprocess
 from fastapi.logger import logger as fastapi_logger
-log = logging.getLogger()
-log.setLevel(logging.DEBUG)
-log.debug("a debug msg")
+
 def get_driver(profile):
     try:
         os.makedirs(profile)
