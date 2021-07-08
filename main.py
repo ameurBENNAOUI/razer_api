@@ -26,8 +26,8 @@ import pandas as pd
 import subprocess
 from fastapi.logger import logger as fastapi_logger
 import psutil
-display = Display(visible=0, size=(800, 600))
-display.start()
+# display = Display(visible=0, size=(800, 600))
+# display.start()
 def get_driver(profile):
     
     try:
@@ -75,9 +75,7 @@ def login(email,password,driver):
 def get_session(email,password,profile) :   
     print("create session for user:%s" % email)
     
-    # if os.name!='nt' : 
-    #     display = Display(visible=0, size=(800, 600))
-    #     display.start()
+
     
     driver=get_driver(profile)
     
@@ -149,6 +147,10 @@ def RELOAD_account(email,password,pincode):
     
 def TOPUP_product(email,password,catalog_url,User_ID,amount):
     try:
+            if os.name!='nt' : 
+                display = Display(visible=0, size=(800, 600))
+                display.start()
+                
             profile=os.path.join(os.getcwd(), "data", email) 
             start_time = time.time()
             driver=get_session(email,password,profile) 
