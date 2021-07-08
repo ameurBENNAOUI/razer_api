@@ -65,11 +65,14 @@ def get_driver(profile):
 
 
 def login(email,password,driver):
-    WebDriverWait(driver, 4).until(EC.presence_of_element_located((By.XPATH, '//input[@name="email"]'))).clear()
-    driver.find_element_by_xpath('//input[@name="password"]').clear()
-    driver.find_element_by_xpath('//input[@name="email"]').send_keys(email)
-    driver.find_element_by_xpath('//input[@name="password"]').send_keys(password)
-    driver.find_element_by_id("btn-log-in").click()
+    try:
+        WebDriverWait(driver, 4).until(EC.presence_of_element_located((By.XPATH, '//input[@name="email"]'))).clear()
+        driver.find_element_by_xpath('//input[@name="password"]').clear()
+        driver.find_element_by_xpath('//input[@name="email"]').send_keys(email)
+        driver.find_element_by_xpath('//input[@name="password"]').send_keys(password)
+        driver.find_element_by_id("btn-log-in").click()
+    except Exception as e:
+        print(e)        
     return driver
 
 def get_session(email,password,profile) :   
@@ -93,7 +96,7 @@ def get_session(email,password,profile) :
         except:
             pass    
     
-        driver=login(email,password,driver)
+    driver=login(email,password,driver)
     
     
 
