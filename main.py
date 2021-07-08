@@ -40,7 +40,7 @@ def get_driver(profile):
     # else:
     #     print ("Successfully created the directory %s" % profile)
         
-    destination = shutil.copytree(os.path.join(os.getcwd(), 'data/origin'), profile, copy_function = shutil.copy)
+    destination = shutil.copytree(os.path.join(os.getcwd(), 'data/orgin'), profile, copy_function = shutil.copy)
 
     try:
         for proc in psutil.process_iter():
