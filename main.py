@@ -1,3 +1,36 @@
+import time
+import json 
+from fastapi.responses import JSONResponse
+import os
+from fastapi import Depends, FastAPI, HTTPException
+# from pydantic import BaseModel
+from fastapi.encoders import jsonable_encoder
+# from fastapi.responses import FileResponse
+from fastapi import FastAPI
+from typing import List
+import uvicorn
+from fastapi import Form,File, UploadFile, Query
+from fastapi.logger import logger as fastapi_logger
+from tinydb import TinyDB,where
+from tinydb import Query as Querydb
+import numpy as np
+from fastapi.middleware.cors import CORSMiddleware
+from typing import List
+import logging
+import subprocess
+import re
+global db
+global listAccount
+global listGroup
+from fastapi.responses import FileResponse
+import pymongo
+import json
+from fastapi import FastAPI, File, UploadFile
+import random
+import string
+from typing import Optional
+
+from pyvirtualdisplay import Display
 
 import time
 import json 
@@ -22,7 +55,9 @@ import shutil
 import pandas as pd
 import subprocess
 from fastapi.logger import logger as fastapi_logger
-
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+log.debug("a debug msg")
 def get_driver(profile):
     try:
         os.makedirs(profile)
@@ -90,6 +125,8 @@ def get_session(email,password,profile) :
     return driver
 
 def select_product_topup(email,password,catalog_url,User_ID,amount):
+    status='Error'         
+
     driver.get(catalog_url)
     driver.execute_script("window.scrollTo(0, 300)")
 
@@ -225,13 +262,13 @@ async def TOPUP_product(email:str,password:str,catalog_url: str ,User_ID:str,amo
 
     status=TOPUP_product(email,password,catalog_url,User_ID,amount)    
 
-    return {"status":status }
+    return JSONResponse(content={"status":status })
 
 @app.post("/RELOAD_account/",tags=["RELOAD account"])
 async def RELOAD_account(email:str,password:str,pincode: str):
     status=RELOAD_account(email,password,pincode)
     
-    return {"status":status}
+    return JSONResponse(content={"status":status }) 
   
 @app.post("/OTPMessage/",tags=["OTP Message"])
 async def OTPMessage(email:str,OTP:str):
@@ -244,9 +281,9 @@ async def OTPMessage(email:str,OTP:str):
     df = df.append(data,ignore_index=True)
     df.to_csv('data.csv', mode='a', header=False)
 
+    status='Successful'
 
-
-    return {"status":'Successful'  }
+    return JSONResponse(content={"status":status }) 
 
 if __name__ == '__main__':
     uvicorn.run("main:app", port=8080, host='0.0.0.0', reload=True)
