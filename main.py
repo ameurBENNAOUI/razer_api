@@ -70,7 +70,7 @@ def login(email,password,driver):
         driver.find_element_by_xpath('//input[@name="password"]').clear()
         driver.find_element_by_xpath('//input[@name="email"]').send_keys(email)
         driver.find_element_by_xpath('//input[@name="password"]').send_keys(password)
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '#btn-log-in'))).click()
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="btn-log-in"]'))).click()
 
         # driver.find_element_by_id("btn-log-in").click()
         print('Successful login')
