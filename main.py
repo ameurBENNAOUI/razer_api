@@ -1,34 +1,4 @@
-import time
-import json 
-from fastapi.responses import JSONResponse
-import os
-from fastapi import Depends, FastAPI, HTTPException
-# from pydantic import BaseModel
-from fastapi.encoders import jsonable_encoder
-# from fastapi.responses import FileResponse
-from fastapi import FastAPI
-from typing import List
-import uvicorn
-from fastapi import Form,File, UploadFile, Query
-from fastapi.logger import logger as fastapi_logger
-from tinydb import TinyDB,where
-from tinydb import Query as Querydb
-import numpy as np
-from fastapi.middleware.cors import CORSMiddleware
-from typing import List
-import logging
-import subprocess
-import re
-global db
-global listAccount
-global listGroup
-from fastapi.responses import FileResponse
-import pymongo
-import json
-from fastapi import FastAPI, File, UploadFile
-import random
-import string
-from typing import Optional
+
 
 from pyvirtualdisplay import Display
 
