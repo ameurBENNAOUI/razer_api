@@ -73,6 +73,7 @@ def login(email,password,driver):
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '#btn-log-in')))
 
         # driver.find_element_by_id("btn-log-in").click()
+        print('Successful login')
     except Exception as e:
         print(e)        
     return driver
