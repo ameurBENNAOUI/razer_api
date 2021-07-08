@@ -92,7 +92,7 @@ def get_session(email,password,profile) :
 
     return driver
 
-def select_product_topup(email,password,catalog_url,User_ID,amount):
+def select_product_topup(email,password,catalog_url,User_ID,amount,driver):
     status='Error'         
 
     driver.get(catalog_url)
@@ -146,7 +146,7 @@ def TOPUP_product(email,password,catalog_url,User_ID,amount):
     driver=get_session(email,password,profile) 
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="/account/photo/edit"]')))
     
-    driver=select_product_topup(email,password,catalog_url,User_ID,amount)  
+    driver=select_product_topup(email,password,catalog_url,User_ID,amount,driver)  
     driver.execute_script("window.scrollTo(0, 300)")
     
     element=WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button.btnConfirm')))   
@@ -218,12 +218,11 @@ app.add_middleware(
    
 
 
-# email='bennaoui.ameur@gmail.com'
-# email='wass.ssit@gmail.com'
-# password='Mohamed@2020'
-# catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
-# User_ID='2039664991'
-# amount='100 + 10 Diamonds - USD 1.00'
+email='bennaoui.ameur@gmail.com'
+password='Mohamed@2020'
+catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
+User_ID='2039664991'
+amount='100 + 10 Diamonds - USD 1.00'
 @app.post("/TOPUP_product/",tags=["TOPUP product"])
 async def TOPUP_product(email:str,password:str,catalog_url: str ,User_ID:str,amount: str):
 
