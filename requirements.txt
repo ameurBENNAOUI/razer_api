@@ -3,3 +3,5 @@ fastapi[all]
 fastapi
 selenium
 uvicorn
+psutil
+pyvirtualdisplay
