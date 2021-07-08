@@ -239,11 +239,11 @@ app.add_middleware(
    
 
 
-email='bennaoui.ameur@gmail.com'
-password='Mohamed@2020'
-catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
-User_ID='2039664991'
-amount='100 + 10 Diamonds - USD 1.00'
+# email='bennaoui.ameur@gmail.com'
+# password='Mohamed@2020'
+# catalog_url='https://gold.razer.com/gold/catalog/freefire-direct-top-up'
+# User_ID='2039664991'
+# amount='100 + 10 Diamonds - USD 1.00'
 
 @app.post("/TOPUP_product/",tags=["TOPUP product"])
 async def TOPUP_product_EP(email:str,password:str,catalog_url: str ,User_ID:str,amount: str):
