@@ -87,7 +87,6 @@ def get_session(email,password,profile) :
         driver=login(email,password,driver)
 
     except Exception as e:
-        
         print(e)
     
     # try:
